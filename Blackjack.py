@@ -48,8 +48,11 @@ class Player():
         hand = [card[0] for card in self.current_hand]
         print (hand)
      
-    
-     # needs def for reseting the hand to an empty list
+    def newHand(self):
+        '''
+        clears the player hand for a new game
+        '''
+        self.current_hand=[]
 
 # test_player.current_hand += tuple([test_deck.drawCard()])
 # use this syntax to add the cards as a tuple to current_hand
