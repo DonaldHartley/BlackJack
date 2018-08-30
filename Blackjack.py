@@ -40,3 +40,7 @@ class Player():
         self.wins = wins
         self.losses = losses
         self.current_hand = current_hand 
+     # needs def for reseting the hand to an empty list
+
+# test_player.current_hand += tuple([test_deck.drawCard()])
+# use this syntax to add the cards as a tuple to current_hand
