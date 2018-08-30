@@ -40,6 +40,15 @@ class Player():
         self.wins = wins
         self.losses = losses
         self.current_hand = current_hand 
+        
+    def handPrint(self):
+        '''
+        This prints just the cards and not the point values
+        '''
+        hand = [card[0] for card in self.current_hand]
+        print (hand)
+     
+    
      # needs def for reseting the hand to an empty list
 
 # test_player.current_hand += tuple([test_deck.drawCard()])
