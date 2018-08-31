@@ -28,8 +28,6 @@ class Deck:
         '''
         from random import randint
         return self.deck_list.pop(randint(0,len(self.deck_list)-1))
-
-    
 class Player():
     '''
     This creates a player to play blackjack with records for money, wins, losses
@@ -40,7 +38,7 @@ class Player():
         self.wins = wins
         self.losses = losses
         self.current_hand = current_hand 
-        
+            
     def handPrint(self):
         '''
         This prints just the cards and not the point values
@@ -53,6 +51,70 @@ class Player():
         clears the player hand for a new game
         '''
         self.current_hand=[]
+
+    def checkWin(self):
+        '''
+        This checks the complex conditions for winning, loosing, and continuing
+        '''
+        points_hand = [card[1] for card in self.current_hand]
+        check_win = True
+        # the format of the returns are [points value, end hand t/f, & win t/f]
+        while check_win:
+            if sum(points_hand)<21:
+                check_win = False
+                return [sum(points_hand), False, False]
+            elif sum(points_hand)==21:
+                check_win = False
+                return [sum(points_hand), True, True]
+            elif sum(points_hand)>21:
+                if 11 in points_hand:
+                    points_hand[points_hand.index(11)]=1
+                    continue
+                else:
+                    check_win = False
+                    return [sum(points_hand), True, False]
+
+class Dealer():
+    '''
+    This operates the dealer and its hand
+    '''
+    def __init__(self,current_hand=[]):
+        self.current_hand = current_hand
+        
+    def handPrint(self):
+        '''
+        This prints just the cards and not the point values
+        '''
+        hand = [card[0] for card in self.current_hand]
+        print (hand)
+     
+    def newHand(self):
+        '''
+        clears the dealer hand for a new game
+        '''
+        self.current_hand=[]
+
+    def checkWin(self):
+        '''
+        This checks the complex conditions for winning, loosing, and continuing
+        '''
+        points_hand = [card[1] for card in self.current_hand]
+        check_win = True
+        # the format of the returns are [points value, end hand t/f, & win t/f]
+        while check_win:
+            if sum(points_hand)<21:
+                check_win = False
+                return [sum(points_hand), False, False]
+            elif sum(points_hand)==21:
+                check_win = False
+                return [sum(points_hand), True, True]
+            elif sum(points_hand)>21:
+                if 11 in points_hand:
+                    points_hand[points_hand.index(11)]=1
+                    continue
+                else:
+                    check_win = False
+                    return [sum(points_hand), True, False]
 
 # test_player.current_hand += tuple([test_deck.drawCard()])
 # use this syntax to add the cards as a tuple to current_hand
