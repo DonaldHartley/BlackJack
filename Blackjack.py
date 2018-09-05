@@ -115,6 +115,9 @@ class Dealer():
                 else:
                     check_win = False
                     return [sum(points_hand), True, False]
+# needs to be checked if the ace conversion does all aces or the first found
+# needs a hit/stay rules
+# maybe one class for player and dealer?
 
 # test_player.current_hand += tuple([test_deck.drawCard()])
 # use this syntax to add the cards as a tuple to current_hand
