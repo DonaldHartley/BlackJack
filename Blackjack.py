@@ -99,7 +99,7 @@ def play_blackjack():
         This prints the game board for each play made
         '''
         print(f'|Player |Money: {player_one.money} |Bet ammount: {player.bet} \
-        |Wins: {player_one.wins} |Losses: {player_one.losses} |\n\n')
+              |Wins: {player_one.wins} |Losses: {player_one.losses} |\n\n')
         print(f'|Dealers hand: ')
         dealer.handPrint() 
         print('|\n\n')
@@ -112,7 +112,7 @@ def play_blackjack():
         This prints the start a new hand board and player prompt
         '''
         print(f'|Player |Money: {player_one.money} |Bet ammount: {player.bet} \
-        |Wins: {player_one.wins} |Losses: {player_one.losses} |\n\n')
+              |Wins: {player_one.wins} |Losses: {player_one.losses} |\n\n')
         print('Would you like to BET on a new hand or QUIT?\n')
         ask=True
         while ask:
@@ -131,11 +131,11 @@ def play_blackjack():
                         continue
                     elif player.bet > player.money:
                         print (f'\nYou only have {player.money} available, {player_bet} \
-                        is too much.\nPlease choose a different ammount\n')
+                               is too much.\nPlease choose a different ammount\n')
                         continue
                     elif player.bet<=0:
                         print (f'\n{player_bet} is not a valid ammount please try \
-                        again.\n')
+                               again.\n')
                         continue
                     elif player.bet<player.money:
                         print('Ok, lets begin!\n\n')
