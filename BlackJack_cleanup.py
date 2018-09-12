@@ -224,30 +224,35 @@ def hit_raise_stand():
             print('\nThat is not a valid response. ')
             continue
         elif response == 'r':
-            raise_bet = True
-            while raise_bet:
-                print('\nOk Raise, how much would you like to raise?\n')
-                try:
-                    player_one.bet_raise = int(input())
-                execpt:
-                    print('Sorry please provide an intiger')
-                elif player_one.bet_raise > player_one.money:
-                    print(f'\nYou only have {player_one.money} available, {player_one.bet_raise} is too much.\n \
-                    Please choose a different amount\n')
-                    continue
-                elif player_one.bet_raise <= 0:
-                    print(f'\n{player_one.bet_raise} is not a valid amount please try again.\n')
-                    continue
-                elif player_one.bet_raise <= player_one.money:
-                    print('Ok\n\n')
-                    player_one.money -= player_one.bet_raise
-                    player_one.bet += player_one.bet_raise
-                    player_one.bet_raise = 0
-                    player_one.current_hand += tuple([the_shoe.draw_card()])
-                    play_check()
-                else:
-                    print(f'\n{player_one.bet_raise} is not a valid number please try again.\n')
-                    continue
+            if player_one.money == 0:
+                print('Sorry you dont have any money to raise with')
+                response = ''
+                continue
+            else:
+                raise_bet = True
+                while raise_bet:
+                    print('\nOk Raise, how much would you like to raise?\n')
+                    try:
+                        player_one.bet_raise = int(input())
+                    execpt:
+                        print('Sorry please provide an intiger')
+                    elif player_one.bet_raise > player_one.money:
+                        print(f'\nYou only have {player_one.money} available, {player_one.bet_raise} is too much.\n \
+                        Please choose a different amount\n')
+                        continue
+                    elif player_one.bet_raise <= 0:
+                        print(f'\n{player_one.bet_raise} is not a valid amount please try again.\n')
+                        continue
+                    elif player_one.bet_raise <= player_one.money:
+                        print('Ok\n\n')
+                        player_one.money -= player_one.bet_raise
+                        player_one.bet += player_one.bet_raise
+                        player_one.bet_raise = 0
+                        player_one.current_hand += tuple([the_shoe.draw_card()])
+                        play_check()
+                    else:
+                        print(f'\n{player_one.bet_raise} is not a valid number please try again.\n')
+                        continue
         elif response == 's':
             print('Ok Stand\n\n')
             ask = False
