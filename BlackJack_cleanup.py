@@ -57,8 +57,8 @@ class Deck:
                           ('7 of SPADES', 7), ('8 of SPADES', 8), ('9 of SPADES', 9),
                           ('10 of SPADES', 10), ('JACK of SPADES', 10), ('QUEEN of SPADES', 10),
                           ('KING of SPADES', 10)]
-
-
+        
+        
 class Player:
     """
     This creates a player/dealer to play blackjack with records for
@@ -105,8 +105,8 @@ class Player:
                 else:
                     points_eval = False
                     return sum(points_hand)
-
-
+            
+            
 def player_input():
     """
     This takes a player input and returns the first letter
@@ -116,8 +116,8 @@ def player_input():
     player_says = input()
     return player_says[0].lower()
     # returns first letter lowercase
-
-
+    
+    
 player_one = Player()
 dealer = Player()
 the_shoe = Deck()
@@ -130,7 +130,7 @@ ask = False
 dealer_check = False
 raise_bet = False
 points_eval = False
-
+dealer_action = False
 
 def game_board():
     """
@@ -144,8 +144,8 @@ def game_board():
     print('|Players hand: ')
     player_one.hand_print()
     print('\n-----')
-
-
+    
+    
 def start_hand():
     """
     This prints the start a new hand board and player prompt
@@ -154,13 +154,10 @@ def start_hand():
     global player_one
     global dealer
     global the_shoe
-    global player_hand_results
-    global dealer_hand_results
     global play
     global this_hand
+    global dealer_action
     global ask
-    global dealer_check
-    global raise_bet
     game_board()
     print('Would you like to BET on a new hand or QUIT?\n')
     response = ''
@@ -177,12 +174,11 @@ def start_hand():
                 print('How much would you like to bet?\n')
                 player_one.bet = int(input())
                 if player_one.bet > player_one.money:
-                    print(f'\nYou only have {player_one.money} available, {player_one.bet} \
-                           is too much.\nPlease choose a different amount\n')
+                    print(f'\nYou only have {player_one.money} available, {player_one.bet} is too much.\n \
+                    Please choose a different amount\n')
                     continue
                 elif player_one.bet <= 0:
-                    print(f'\n{player_one.bet} is not a valid amount please try \
-                           again.\n')
+                    print(f'\n{player_one.bet} is not a valid amount please try again.\n')
                     continue
                 elif player_one.bet <= player_one.money:
                     print('Ok, lets begin!\n\n')
@@ -201,9 +197,10 @@ def start_hand():
             print('Thank you for playing!')
             play = False
             this_hand = False
+            dealer_action = False
             ask = False
-
-
+            
+            
 def hit_raise_stand():
     """
     This is so the player can choose their next action
@@ -212,13 +209,9 @@ def hit_raise_stand():
     global player_one
     global dealer
     global the_shoe
-    global player_hand_results
-    global dealer_hand_results
-    global play
-    global this_hand
     global ask
-    global dealer_check
     global raise_bet
+    global dealer_action
     response = ''
     ask = True
     while ask:
@@ -233,13 +226,11 @@ def hit_raise_stand():
                 print('\nOk Raise, how much would you like to raise?\n')
                 player_one.bet_raise = int(input())
                 if player_one.bet_raise > player_one.money:
-                    print(f'\nYou only have {player_one.money} available, \
-                           {player_one.bet_raise} is too much.\nPlease choose a \
-                           different amount\n')
+                    print(f'\nYou only have {player_one.money} available, {player_one.bet_raise} is too much.\n \
+                    Please choose a different amount\n')
                     continue
                 elif player_one.bet_raise <= 0:
-                    print(f'\n{player_one.bet_raise} is not a valid amount please try \
-                           again.\n')
+                    print(f'\n{player_one.bet_raise} is not a valid amount please try again.\n')
                     continue
                 elif player_one.bet_raise <= player_one.money:
                     print('Ok\n\n')
@@ -249,76 +240,78 @@ def hit_raise_stand():
                     player_one.current_hand += tuple([the_shoe.draw_card()])
                     play_check()
                 else:
-                    print(f'\n{player_one.bet_raise} is not a valid number \
-                           please try again.\n')
+                    print(f'\n{player_one.bet_raise} is not a valid number please try again.\n')
                     continue
         elif response == 's':
             print('Ok Stand\n\n')
             ask = False
+            response = ''
+            dealer_action = True
+            this_hand = False
         elif response == 'h':
             print('Ok Hit\n\n')
             player_one.current_hand += tuple([the_shoe.draw_card()])
             play_check()
-
-
+            
+            
 def play_check():
     """
     this checks if the player wins or busts
     """
-    global response
     global player_one
-    global dealer
     global the_shoe
     global player_hand_results
-    global dealer_hand_results
-    global play
-    global this_hand
     global ask
-    global dealer_check
     global raise_bet
+    global response
+    global dealer_action
+    global this_hand
     game_board()
     player_hand_results = player_one.check_points()
     # returns are adjusted points values
     if player_hand_results == 21:
-        print('21 you Win!')
+        print('21 you Win!\n-----')
         player_one.money += (player_one.bet*2)
         player_one.bet = 0
         player_one.wins += 1
         player_one.new_hand()
         dealer.new_hand()
         the_shoe.shuffle_deck()
-        this_hand = False
         raise_bet = False
         ask = False
         response = ''
+        dealer_action = False
+        this_hand = False
     elif player_hand_results > 21:
         player_one.bet = 0
         player_one.losses += 1
         player_one.new_hand()
         dealer.new_hand()
         the_shoe.shuffle_deck()
-        this_hand = False
         raise_bet = False
         ask = False
         response = ''
-        print('You Bust, House Wins')
-
-
+        dealer_action = False
+        this_hand = False
+        print('You Bust, House Wins\n-----')
+    else:
+        this_hand = True
+        response = ''
+        raise_bet = False
+        
+        
 def dealer_acts():
     """
     this runs the dealers actions
     """
-    global response
     global player_one
     global dealer
     global the_shoe
     global player_hand_results
     global dealer_hand_results
-    global play
-    global this_hand
-    global ask
     global dealer_check
-    global raise_bet
+    global dealer_action
+    global this_hand
     dealer.current_hand += tuple([the_shoe.draw_card()])
     dealer_hand_results = dealer.check_points()
     player_hand_results = player_one.check_points()
@@ -331,51 +324,82 @@ def dealer_acts():
             dealer_hand_results = dealer.check_points()
             continue
         elif dealer_hand_results == 21:
-            print('House Wins')
+            print('House Wins\n-----')
             player_one.bet = 0
             player_one.losses += 1
             player_one.new_hand()
             dealer.new_hand()
             the_shoe.shuffle_deck()
-            this_hand = False
             dealer_check = False
+            dealer_action = False
+            this_hand = False
         elif 17 <= dealer_hand_results < 21:
             point_check = player_hand_results-dealer_hand_results
             if point_check < 0:
-                print('House Wins')
+                print('House Wins\n-----')
                 player_one.bet = 0
                 player_one.losses += 1
                 player_one.new_hand()
                 dealer.new_hand()
                 the_shoe.shuffle_deck()
-                this_hand = False
                 dealer_check = False
+                dealer_action = False
+                this_hand = False
             elif point_check > 0:
-                print('Player Wins!')
+                print('Player Wins!\n-----')
                 player_one.money += (player_one.bet*2)
                 player_one.bet = 0
                 player_one.wins += 1
                 player_one.new_hand()
                 dealer.new_hand()
                 the_shoe.shuffle_deck()
-                this_hand = False
                 dealer_check = False
+                dealer_action = False
+                this_hand = False
             elif point_check == 0:
-                print('Push')
+                print('Push\n-----')
                 player_one.money += player_one.bet
                 player_one.bet = 0
                 player_one.new_hand()
                 dealer.new_hand()
                 the_shoe.shuffle_deck()
-                this_hand = False
                 dealer_check = False
+                dealer_action = False
+                this_hand = False
         elif dealer_hand_results > 21:
-            print('House busts, you Win!')
+            print('House busts, you Win!\n-----')
             player_one.money += (player_one.bet*2)
             player_one.bet = 0
             player_one.wins += 1
             player_one.new_hand()
             dealer.new_hand()
             the_shoe.shuffle_deck()
-            this_hand = False
             dealer_check = False
+            dealer_action = False
+            this_hand = False
+            
+            
+def play_blackjack():
+    """
+    This is the function to run the game blackjack
+    """
+    global play
+    global player_one
+    global dealer
+    global the_shoe
+    player_one = Player()
+    dealer = Player()
+    the_shoe = Deck()
+    play = True
+    print ('Welcome to the table. Lets play BlackJack!\n')
+    while play:
+        if player_one.money==0:
+            print('Sorry you are out of cash. Please come again.')
+            play=False
+        else:
+            start_hand()
+            if this_hand:
+                hit_raise_stand()
+            if dealer_action:
+                dealer_acts()
+ 
