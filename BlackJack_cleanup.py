@@ -172,8 +172,11 @@ def start_hand():
             betting = True
             while betting:
                 print('How much would you like to bet?\n')
-                player_one.bet = int(input())
-                if player_one.bet > player_one.money:
+                try:
+                    player_one.bet = int(input())
+                execpt:
+                    print('Sorry pleae provide an intiger')
+                elif player_one.bet > player_one.money:
                     print(f'\nYou only have {player_one.money} available, {player_one.bet} is too much.\n \
                     Please choose a different amount\n')
                     continue
@@ -224,8 +227,11 @@ def hit_raise_stand():
             raise_bet = True
             while raise_bet:
                 print('\nOk Raise, how much would you like to raise?\n')
-                player_one.bet_raise = int(input())
-                if player_one.bet_raise > player_one.money:
+                try:
+                    player_one.bet_raise = int(input())
+                execpt:
+                    print('Sorry please provide an intiger')
+                elif player_one.bet_raise > player_one.money:
                     print(f'\nYou only have {player_one.money} available, {player_one.bet_raise} is too much.\n \
                     Please choose a different amount\n')
                     continue
