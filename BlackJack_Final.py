@@ -174,9 +174,9 @@ def start_hand():
                 print('How much would you like to bet?\n')
                 try:
                     player_one.bet = int(input())
-                execpt:
+                except:
                     print('Sorry pleae provide an intiger')
-                elif player_one.bet > player_one.money:
+                if player_one.bet > player_one.money:
                     print(f'\nYou only have {player_one.money} available, {player_one.bet} is too much.\n \
                     Please choose a different amount\n')
                     continue
@@ -234,9 +234,9 @@ def hit_raise_stand():
                     print('\nOk Raise, how much would you like to raise?\n')
                     try:
                         player_one.bet_raise = int(input())
-                    execpt:
+                    except:
                         print('Sorry please provide an intiger')
-                    elif player_one.bet_raise > player_one.money:
+                    if player_one.bet_raise > player_one.money:
                         print(f'\nYou only have {player_one.money} available, {player_one.bet_raise} is too much.\n \
                         Please choose a different amount\n')
                         continue
