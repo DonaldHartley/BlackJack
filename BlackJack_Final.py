@@ -187,9 +187,9 @@ def start_hand():
                     print('Ok, lets begin!\n\n')
                     player_one.money -= player_one.bet
                     dealer.current_hand += tuple([the_shoe.draw_card()])
+                    dealer.current_hand += tuple([the_shoe.draw_card()])
                     player_one.current_hand += tuple([the_shoe.draw_card()])
                     player_one.current_hand += tuple([the_shoe.draw_card()])
-                    game_board()
                     play_check()
                     betting = False
                     ask = False
